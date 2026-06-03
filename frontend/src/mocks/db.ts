@@ -39,8 +39,8 @@ const tom: User = {
 
 const bot: User = {
   id: "u_bot",
-  name: "CommHQ Bot",
-  email: "bot@commhq.ai",
+  name: "Syntra Bot",
+  email: "bot@syntra.ai",
   globalRole: "user",
   online: true,
 };

@@ -29,7 +29,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
   content: string;
 }) {
   return (
-    <div className="commhq-markdown text-sm leading-relaxed break-words">
+    <div className="syntra-markdown text-sm leading-relaxed break-words">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[[rehypeSanitize, schema]]}

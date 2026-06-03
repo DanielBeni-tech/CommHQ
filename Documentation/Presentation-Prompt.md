@@ -1,4 +1,4 @@
-# Prompt IA — Présentation PowerPoint CommHQ (Hackathon J.U.I.N 2026)
+# Prompt IA — Présentation PowerPoint Syntra (Hackathon J.U.I.N 2026)
 
 Ce document contient :
 1. L'**outil IA idéal** recommandé (et les alternatives)
@@ -36,7 +36,7 @@ CONTEXTE DU CONCOURS
 - BONUS clé du jury : jusqu'à +3 points pour une intégration IA concrète et fonctionnelle
   (pas juste une idée). Ce point doit être mis très en valeur.
 
-NOTRE PROJET : CommHQ — Le Messager Technique Sécurisé (Thème 13)
+NOTRE PROJET : Syntra — Le Messager Technique Sécurisé (Thème 13)
 - Concept : application de chat d'entreprise organisée par canaux thématiques
   (#backend, #incidents, #data...), avec rendu natif et propre du Markdown,
   des blocs de code et de la coloration syntaxique.
@@ -71,14 +71,14 @@ POURQUOI NOUS GAGNONS
 - Architecture propre et crédible "enterprise" (Spring Boot + sécurité).
 
 STRUCTURE DES SLIDES (génère exactement ces slides, une idée par slide)
-1. Titre : "CommHQ — Le Messager Technique Sécurisé" + sous-titre accrocheur + équipe + Thème 13.
+1. Titre : "Syntra — Le Messager Technique Sécurisé" + sous-titre accrocheur + équipe + Thème 13.
 2. Le Problème : le code et la technique sont illisibles dans les chats d'entreprise actuels.
-3. La Solution : CommHQ, le chat pensé pour les équipes techniques (Markdown + code natif).
+3. La Solution : Syntra, le chat pensé pour les équipes techniques (Markdown + code natif).
 4. Démo / Captures : canaux, message avec bloc de code coloré, rendu Markdown.
 5. La fonctionnalité IA bonus : le bot "Résumé en 3 phrases" (mettre en avant +3 pts jury).
 6. Architecture technique : schéma Frontend (React) <-> Backend (Spring Boot) <-> IA + DB.
 7. Stack & Méthode Cursor : comment on a livré vite (Mode Plan, Composer, mocks, OpenAPI).
-8. Pourquoi CommHQ se démarque : 3 arguments forts (différenciation, IA concrète, exécution).
+8. Pourquoi Syntra se démarque : 3 arguments forts (différenciation, IA concrète, exécution).
 9. Roadmap / et après : threads, recherche sémantique RAG, intégrations.
 10. Slide de clôture : logo, message final percutant, "Merci / Questions".
 
@@ -112,7 +112,7 @@ Si vous préférez un fichier `.pptx` versionnable dans le repo, demandez :
 
 ```
 Génère un script Python utilisant la librairie python-pptx qui crée le fichier
-CommHQ-Pitch.pptx avec toutes les slides ci-dessus (titres, puces, notes orateur),
+Syntra-Pitch.pptx avec toutes les slides ci-dessus (titres, puces, notes orateur),
 thème sombre, prêt à exécuter.
 ```
 

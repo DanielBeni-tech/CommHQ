@@ -2,80 +2,123 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Design system CommHQ — généré via ui-ux-pro-max
-   Palette : bleu messager #2563EB + vert "en ligne" #059669
-   Typo : IBM Plex Sans (UI) / JetBrains Mono (code) */
+/* ───────────────────────────────────────────────────────────────────────
+   Syntra — Design system
+   Palette de marque :
+     Razzmatazz   #DF1E5A  → accent (CTA IA, highlights)
+     Fuel Yellow  #EBB12E  → warning, messages épinglés
+     Mountain M.  #2EB57D  → success / présence en ligne
+     Picton Blue  #36C4EF  → primary (liens, actions principales)
+     Outer Space  #4A5351  → sidebar / rail (navigation sombre)
+   Typo :
+     IBM Plex Sans  → UI
+     JetBrains Mono → code, badges techniques
+   ─────────────────────────────────────────────────────────────────────── */
 
 :root {
   --radius: 0.625rem;
 
+  /* ── Surfaces & textes (light) ───────────────────────────────────── */
   --background: #ffffff;
-  --foreground: #0f172a;
+  --foreground: #1a1f1e;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #1a1f1e;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #2563eb;
+  --popover-foreground: #1a1f1e;
+
+  /* ── Marque ──────────────────────────────────────────────────────── */
+  --primary: #18a6d1;          /* Picton Blue dark — meilleur contraste sur blanc */
   --primary-foreground: #ffffff;
-  --secondary: #f1f5fd;
-  --secondary-foreground: #1e293b;
-  --muted: #f1f5fd;
-  --muted-foreground: #64748b;
-  --accent: #6366f1;
+  --primary-soft: #e4f6fc;      /* Picton très clair pour fonds tintés */
+
+  --accent: #df1e5a;            /* Razzmatazz — IA, focus marketing */
   --accent-foreground: #ffffff;
-  --success: #059669;
+  --accent-soft: #fde8ef;
+
+  --secondary: #f1f5f4;
+  --secondary-foreground: #2c3533;
+
+  --muted: #f4f6f5;
+  --muted-foreground: #5b6664;
+
+  /* ── Statuts ─────────────────────────────────────────────────────── */
+  --success: #10975f;           /* Mountain Meadow dark */
   --success-foreground: #ffffff;
-  --destructive: #dc2626;
+  --success-soft: #defaed;
+
+  --warning: #b07908;           /* Fuel Yellow dark — pour contraste AA */
+  --warning-foreground: #ffffff;
+  --warning-soft: #fef3d1;
+
+  --destructive: #c1003c;       /* Razzmatazz dark */
   --destructive-foreground: #ffffff;
-  --border: #e4ecfc;
-  --input: #e4ecfc;
-  --ring: #2563eb;
 
-  --sidebar: #0f172a;
-  --sidebar-foreground: #e2e8f0;
-  --sidebar-muted: #94a3b8;
-  --sidebar-accent: #1e293b;
+  /* ── Bordures, inputs, focus ─────────────────────────────────────── */
+  --border: #e3e7e6;
+  --input: #e3e7e6;
+  --ring: #36c4ef;              /* anneau Picton Blue clair, visible sur tous fonds */
+
+  /* ── Sidebar (Outer Space) ───────────────────────────────────────── */
+  --sidebar: #2c3533;
+  --sidebar-foreground: #e8eae9;
+  --sidebar-muted: #9aa3a1;
+  --sidebar-accent: #3d4845;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #1e293b;
-  --sidebar-primary: #2563eb;
+  --sidebar-border: #3d4845;
+  --sidebar-primary: #36c4ef;
 
-  --rail: #0b1220;
-  --rail-foreground: #cbd5e1;
+  /* ── Rail des espaces (encore plus sombre) ───────────────────────── */
+  --rail: #1c2422;
+  --rail-foreground: #cfd3d2;
 }
 
 .dark {
-  --background: #0b1220;
-  --foreground: #e2e8f0;
-  --card: #111a2e;
-  --card-foreground: #e2e8f0;
-  --popover: #111a2e;
-  --popover-foreground: #e2e8f0;
-  --primary: #3b82f6;
-  --primary-foreground: #0b1220;
-  --secondary: #1e293b;
-  --secondary-foreground: #e2e8f0;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --accent: #6366f1;
-  --accent-foreground: #ffffff;
-  --success: #10b981;
-  --success-foreground: #0b1220;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
+  --background: #161b1a;
+  --foreground: #e8eae9;
+  --card: #1f2624;
+  --card-foreground: #e8eae9;
+  --popover: #1f2624;
+  --popover-foreground: #e8eae9;
+
+  --primary: #36c4ef;
+  --primary-foreground: #0b1212;
+  --primary-soft: rgba(54, 196, 239, 0.14);
+
+  --accent: #ff4682;
+  --accent-foreground: #1a1f1e;
+  --accent-soft: rgba(223, 30, 90, 0.18);
+
+  --secondary: #2a3331;
+  --secondary-foreground: #e8eae9;
+
+  --muted: #232b29;
+  --muted-foreground: #9aa3a1;
+
+  --success: #2eb57d;
+  --success-foreground: #0b1212;
+  --success-soft: rgba(46, 181, 125, 0.16);
+
+  --warning: #ebb12e;
+  --warning-foreground: #1a1f1e;
+  --warning-soft: rgba(235, 177, 46, 0.18);
+
+  --destructive: #ff4682;
+  --destructive-foreground: #1a1f1e;
+
   --border: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.12);
-  --ring: #3b82f6;
+  --ring: #36c4ef;
 
-  --sidebar: #0b1220;
-  --sidebar-foreground: #cbd5e1;
-  --sidebar-muted: #64748b;
-  --sidebar-accent: #1e293b;
+  --sidebar: #1c2422;
+  --sidebar-foreground: #d6dad9;
+  --sidebar-muted: #7c8583;
+  --sidebar-accent: #2c3533;
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.06);
-  --sidebar-primary: #3b82f6;
+  --sidebar-primary: #36c4ef;
 
-  --rail: #060b16;
-  --rail-foreground: #cbd5e1;
+  --rail: #0f1413;
+  --rail-foreground: #cfd3d2;
 }
 
 @theme inline {
@@ -85,18 +128,31 @@
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft: var(--warning-soft);
+
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -136,6 +192,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: color-mix(in oklab, var(--primary) 30%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -148,21 +209,62 @@ body {
   }
 }
 
-/* ── Scrollbar de navigation dans les chats ─────────────────────────── */
+/* ── Scrollbar minimaliste ──────────────────────────────────────────── */
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: hsl(var(--border)) transparent;
+  scrollbar-color: var(--border) transparent;
 }
 .scrollbar-thin::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--border));
+  background-color: var(--border);
   border-radius: 3px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background-color: hsl(var(--muted-foreground) / 0.5);
+  background-color: color-mix(in oklab, var(--muted-foreground) 50%, transparent);
+}
+
+/* ── Animations utilitaires ─────────────────────────────────────────── */
+@keyframes syntra-pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 40%, transparent); }
+  50%      { box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 0%, transparent); }
+}
+
+.syntra-status-dot {
+  position: relative;
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background-color: var(--success);
+}
+.syntra-status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  border: 2px solid color-mix(in oklab, var(--success) 60%, transparent);
+  animation: syntra-pulse-ring 2.4s ease-out infinite;
+}
+
+/* ── Effet "glow" subtil pour les éléments IA ───────────────────────── */
+.syntra-ai-glow {
+  background-color: var(--accent-soft);
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+/* ── Lien lisible ───────────────────────────────────────────────────── */
+.prose a,
+a.link {
+  color: var(--primary);
+  text-decoration-color: color-mix(in oklab, var(--primary) 45%, transparent);
+  text-underline-offset: 2px;
+}
+a.link:hover {
+  text-decoration-color: var(--primary);
 }

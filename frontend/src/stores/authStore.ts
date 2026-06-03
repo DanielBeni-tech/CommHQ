@@ -21,6 +21,6 @@ export const useAuthStore = create<AuthState>()(
         set((s) => ({ user: s.user ? { ...s.user, ...patch } : s.user })),
       logout: () => set({ token: null, user: null }),
     }),
-    { name: "commhq-auth" }
+    { name: "syntra-auth" }
   )
 );

@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { Loader2 } from "lucide-react";
+import { Hash, Loader2 } from "lucide-react";
 
 import { useWorkspaces } from "@/hooks/useWorkspaces";
 import { useChannels } from "@/hooks/useChannels";
@@ -21,8 +21,14 @@ export function ChannelRedirect() {
   }
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-2 p-8 text-center text-muted-foreground">
-      <p className="text-sm">Aucun canal. Créez-en un pour démarrer la conversation.</p>
+    <div className="flex h-full flex-col items-center justify-center gap-3 p-10 text-center">
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft text-primary">
+        <Hash className="h-7 w-7" />
+      </div>
+      <h2 className="text-lg font-semibold">Aucun canal pour le moment</h2>
+      <p className="max-w-sm text-sm text-muted-foreground">
+        Créez votre premier canal dans la barre latérale pour démarrer la conversation.
+      </p>
     </div>
   );
 }

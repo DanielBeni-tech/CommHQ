@@ -1,6 +1,6 @@
-# Cahier des charges — CommHQ
+# Cahier des charges — Syntra
 
-> **Thème 13 : CommHQ — Le Messager Technique Sécurisé**
+> **Thème 13 : Syntra — Le Messager Technique Sécurisé**
 > Application de chat d'entreprise organisée par canaux thématiques, avec rendu natif
 > du Markdown, des blocs de code et de la coloration syntaxique, enrichie d'un bot IA
 > capable de résumer une discussion en trois phrases clés.
@@ -18,7 +18,7 @@
 
 ### 1.1 Concept
 
-**CommHQ** est une plateforme de communication d'entreprise temps réel, pensée pour des
+**Syntra** est une plateforme de communication d'entreprise temps réel, pensée pour des
 équipes techniques. Elle reprend les codes éprouvés de Slack et Discord (espaces de
 travail, canaux, messages directs, rôles) tout en mettant l'accent sur ce qui manque
 souvent à ces outils pour les développeurs :
@@ -49,7 +49,7 @@ natives sont **hors périmètre** pour cette première version.
 
 ## 2. Acteurs et rôles
 
-CommHQ s'appuie sur un modèle de rôles inspiré de Slack/Discord, du plus restreint au
+Syntra s'appuie sur un modèle de rôles inspiré de Slack/Discord, du plus restreint au
 plus large.
 
 ### 2.1 Utilisateur (Membre)

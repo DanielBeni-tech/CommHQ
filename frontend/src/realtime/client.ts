@@ -28,7 +28,7 @@ class MockRealtimeClient implements RealtimeClient {
 
   connect() {
     if (this.channel) return;
-    this.channel = new BroadcastChannel("commhq-realtime");
+    this.channel = new BroadcastChannel("syntra-realtime");
     this.channel.onmessage = (e: MessageEvent<RealtimeEvent>) => {
       this.handlers.forEach((h) => h(e.data));
     };

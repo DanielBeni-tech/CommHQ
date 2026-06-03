@@ -1,4 +1,4 @@
-# CommHQ — Le Messager Technique Sécurisé
+# Syntra — Le Messager Technique Sécurisé
 
 > Application de chat d'entreprise organisée par canaux thématiques, avec rendu natif du
 > Markdown, des blocs de code et de la coloration syntaxique, enrichie d'un **bot IA** qui
@@ -24,7 +24,7 @@
 
 ## Présentation
 
-CommHQ reprend les codes de Slack et Discord (espaces de travail, canaux, rôles, messages
+Syntra reprend les codes de Slack et Discord (espaces de travail, canaux, rôles, messages
 directs) en se concentrant sur l'expérience des **équipes techniques** : un rendu de code
 et de Markdown de qualité « éditeur », et un assistant IA pour rattraper rapidement les
 décisions d'un canal.
@@ -78,7 +78,7 @@ Client (React)  ──REST──▶  Backend (NestJS)  ──▶  MongoDB
 ## Structure du projet
 
 ```
-CommHQ/
+Syntra/
 ├── Documentation/
 │   └── Cahier_des_charges.md     # Spécifications complètes
 ├── frontend/                     # App React (à venir)
@@ -96,7 +96,7 @@ CommHQ/
 ```bash
 # 1. Cloner le dépôt
 git clone <url-du-repo>
-cd CommHQ
+cd Syntra
 
 # 2. Lancer l'environnement (base de données, etc.)
 docker compose up -d
@@ -116,7 +116,7 @@ Variables d'environnement (exemple `.env`) :
 
 ```env
 # Backend
-MONGODB_URI=mongodb://localhost:27017/commhq
+MONGODB_URI=mongodb://localhost:27017/syntra
 JWT_SECRET=changeme
 JWT_REFRESH_SECRET=changeme
 LLM_API_KEY=...
@@ -141,4 +141,4 @@ VITE_WS_URL=ws://localhost:3000
 
 ---
 
-*Projet réalisé dans le cadre d'un hackathon — Thème 13 : CommHQ.*
+*Projet réalisé dans le cadre d'un hackathon — Thème 13 : Syntra.*

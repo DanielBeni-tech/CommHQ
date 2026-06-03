@@ -33,11 +33,13 @@ export function LoginPage() {
 
   return (
     <AuthShell>
-      <div className="space-y-6">
-        <div className="space-y-1">
-          <h2 className="text-2xl font-bold tracking-tight">Connexion</h2>
+      <div className="space-y-7">
+        <div className="space-y-1.5">
+          <h2 className="text-[1.7rem] font-bold leading-tight tracking-tight">
+            Bon retour.
+          </h2>
           <p className="text-sm text-muted-foreground">
-            Accédez à vos espaces de travail.
+            Accédez à vos espaces de travail Syntra.
           </p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -63,14 +65,18 @@ export function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" size="lg" className="w-full" disabled={loading}>
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
             Se connecter
           </Button>
         </form>
+        <div className="rounded-md border border-dashed border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
+          Démo : <span className="font-mono">camille@acme.dev</span> ·{" "}
+          <span className="font-mono">demo1234</span>
+        </div>
         <p className="text-center text-sm text-muted-foreground">
           Pas encore de compte ?{" "}
-          <Link to="/register" className="text-primary hover:underline">
+          <Link to="/register" className="font-medium text-primary hover:underline">
             Créer un compte
           </Link>
         </p>

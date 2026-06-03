@@ -6,7 +6,7 @@ import type { WorkspaceRole } from "@/types";
 export function RoleBadge({ role }: { role: WorkspaceRole }) {
   if (role === "moderator") {
     return (
-      <Badge variant="default" className="gap-1">
+      <Badge variant="warning" className="gap-1">
         <Crown className="h-3 w-3" />
         Modérateur
       </Badge>
@@ -22,7 +22,7 @@ export function RoleBadge({ role }: { role: WorkspaceRole }) {
 
 export function AdminBadge() {
   return (
-    <Badge variant="destructive" className="gap-1">
+    <Badge variant="accent" className="gap-1">
       <Shield className="h-3 w-3" />
       Admin
     </Badge>

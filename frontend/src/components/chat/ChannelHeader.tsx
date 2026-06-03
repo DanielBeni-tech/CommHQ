@@ -59,14 +59,16 @@ export function ChannelHeader({
   }
 
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between border-b px-4">
-      <div className="flex min-w-0 items-center gap-2">
-        {channel.isPrivate ? (
-          <Lock className="h-4 w-4 text-muted-foreground" />
-        ) : (
-          <Hash className="h-4 w-4 text-muted-foreground" />
-        )}
-        <h1 className="truncate font-semibold">{channel.name}</h1>
+    <header className="flex h-14 shrink-0 items-center justify-between border-b bg-card/40 px-4 backdrop-blur-sm">
+      <div className="flex min-w-0 items-center gap-2.5">
+        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-muted text-muted-foreground">
+          {channel.isPrivate ? (
+            <Lock className="h-3.5 w-3.5" />
+          ) : (
+            <Hash className="h-3.5 w-3.5" />
+          )}
+        </span>
+        <h1 className="truncate text-[15px] font-semibold">{channel.name}</h1>
         {channel.description && (
           <>
             <Separator orientation="vertical" className="mx-1 h-4" />
@@ -77,20 +79,25 @@ export function ChannelHeader({
         )}
       </div>
 
-      <div className="flex items-center gap-1">
-        <Button variant="ghost" size="sm" onClick={onShowPinned}>
+      <div className="flex items-center gap-1.5">
+        <Button variant="ghost" size="sm" onClick={onShowPinned} className="gap-1.5">
           <Pin className="h-4 w-4" />
-          {pinnedCount > 0 && <Badge variant="secondary">{pinnedCount}</Badge>}
+          <span className="hidden md:inline">Épinglés</span>
+          {pinnedCount > 0 && (
+            <Badge variant="warning" className="px-1.5 py-0 text-[10px] leading-4">
+              {pinnedCount}
+            </Badge>
+          )}
         </Button>
 
         <Button
-          variant="outline"
+          variant="accent"
           size="sm"
           onClick={onSummarize}
           disabled={summarizing}
           className="gap-1.5"
         >
-          <Sparkles className="h-4 w-4 text-accent" />
+          <Sparkles className="h-4 w-4" />
           <span className="hidden sm:inline">
             {summarizing ? "Résumé en cours…" : "Résumer le canal"}
           </span>

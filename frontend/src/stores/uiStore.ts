@@ -21,6 +21,6 @@ export const useUiStore = create<UiState>()(
         set((s) => ({ theme: s.theme === "dark" ? "light" : "dark" })),
       setActiveWorkspace: (activeWorkspaceId) => set({ activeWorkspaceId }),
     }),
-    { name: "commhq-ui" }
+    { name: "syntra-ui" }
   )
 );

@@ -50,20 +50,26 @@ export function RegisterPage() {
 
   return (
     <AuthShell>
-      <div className="space-y-6">
-        <div className="space-y-1">
-          <h2 className="text-2xl font-bold tracking-tight">Créer un compte</h2>
+      <div className="space-y-7">
+        <div className="space-y-1.5">
+          <h2 className="text-[1.7rem] font-bold leading-tight tracking-tight">
+            Créer un compte
+          </h2>
           <p className="text-sm text-muted-foreground">
-            Configurez votre profil pour rejoindre CommHQ.
+            Configurez votre profil pour rejoindre Syntra.
           </p>
         </div>
 
         {inviteToken && (
-          <div className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/5 px-3 py-2 text-sm">
-            <Mail className="h-4 w-4 text-primary" />
-            <span>
-              Invitation à rejoindre{" "}
-              <strong>{workspaceName ?? "un espace de travail"}</strong>.
+          <div className="flex items-center gap-2.5 rounded-lg border border-primary/30 bg-primary-soft px-3 py-2.5 text-sm">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary/15 text-primary">
+              <Mail className="h-3.5 w-3.5" />
+            </span>
+            <span className="leading-tight">
+              <span className="block text-xs uppercase tracking-wide text-primary">Invitation</span>
+              <span className="block font-medium text-foreground">
+                Rejoindre {workspaceName ?? "un espace de travail"}
+              </span>
             </span>
           </div>
         )}
@@ -103,14 +109,14 @@ export function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" size="lg" className="w-full" disabled={loading}>
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
             Créer mon compte
           </Button>
         </form>
         <p className="text-center text-sm text-muted-foreground">
           Déjà inscrit ?{" "}
-          <Link to="/login" className="text-primary hover:underline">
+          <Link to="/login" className="font-medium text-primary hover:underline">
             Se connecter
           </Link>
         </p>

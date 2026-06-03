@@ -41,9 +41,12 @@ export function MessageComposer({
     onTyping(false);
   }
 
+  const remaining = MAX_LENGTH - value.length;
+  const nearLimit = remaining < 200;
+
   return (
-    <div className="border-t p-3">
-      <div className="rounded-lg border bg-card focus-within:ring-2 focus-within:ring-ring">
+    <div className="border-t bg-card/30 p-3">
+      <div className="overflow-hidden rounded-xl border border-input bg-card transition-shadow focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/25">
         <Textarea
           value={value}
           onChange={handleChange}
@@ -51,7 +54,7 @@ export function MessageComposer({
           placeholder={`Message #${channelName} — Markdown et \`\`\`code\`\`\` supportés`}
           rows={2}
           maxLength={MAX_LENGTH}
-          className="border-0 shadow-none focus-visible:ring-0"
+          className="min-h-[60px] resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
           onKeyDown={(e) => {
             if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
               e.preventDefault();
@@ -59,14 +62,19 @@ export function MessageComposer({
             }
           }}
         />
-        <div className="flex items-center justify-between px-3 pb-2">
+        <div className="flex items-center justify-between gap-2 border-t border-border/60 bg-muted/40 px-3 py-2">
           <span
             className={cn(
-              "text-xs text-muted-foreground",
-              value.length > MAX_LENGTH - 200 && "text-destructive"
+              "flex items-center gap-2 font-mono text-[11px] text-muted-foreground",
+              nearLimit && "text-destructive"
             )}
           >
-            {value.length}/{MAX_LENGTH} · Ctrl+Entrée pour envoyer
+            <span>{value.length}/{MAX_LENGTH}</span>
+            <span className="hidden sm:inline">·</span>
+            <kbd className="hidden rounded border border-border bg-background px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline">
+              Ctrl ↵
+            </kbd>
+            <span className="hidden sm:inline">pour envoyer</span>
           </span>
           <Button size="sm" onClick={submit} disabled={disabled || !value.trim()}>
             <Send className="h-4 w-4" /> Envoyer
