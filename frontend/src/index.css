@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Design system CommHQ — généré via ui-ux-pro-max
+   Palette : bleu messager #2563EB + vert "en ligne" #059669
+   Typo : IBM Plex Sans (UI) / JetBrains Mono (code) */
+
+:root {
+  --radius: 0.625rem;
+
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5fd;
+  --secondary-foreground: #1e293b;
+  --muted: #f1f5fd;
+  --muted-foreground: #64748b;
+  --accent: #6366f1;
+  --accent-foreground: #ffffff;
+  --success: #059669;
+  --success-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e4ecfc;
+  --input: #e4ecfc;
+  --ring: #2563eb;
+
+  --sidebar: #0f172a;
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-muted: #94a3b8;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1e293b;
+  --sidebar-primary: #2563eb;
+
+  --rail: #0b1220;
+  --rail-foreground: #cbd5e1;
+}
+
+.dark {
+  --background: #0b1220;
+  --foreground: #e2e8f0;
+  --card: #111a2e;
+  --card-foreground: #e2e8f0;
+  --popover: #111a2e;
+  --popover-foreground: #e2e8f0;
+  --primary: #3b82f6;
+  --primary-foreground: #0b1220;
+  --secondary: #1e293b;
+  --secondary-foreground: #e2e8f0;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #6366f1;
+  --accent-foreground: #ffffff;
+  --success: #10b981;
+  --success-foreground: #0b1220;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #3b82f6;
+
+  --sidebar: #0b1220;
+  --sidebar-foreground: #cbd5e1;
+  --sidebar-muted: #64748b;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-primary: #3b82f6;
+
+  --rail: #060b16;
+  --rail-foreground: #cbd5e1;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-rail: var(--rail);
+  --color-rail-foreground: var(--rail-foreground);
+
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
