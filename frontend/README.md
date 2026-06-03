@@ -1,6 +1,6 @@
-# CommHQ — Frontend
+# Syntra — Frontend
 
-Interface de **CommHQ**, messagerie technique sécurisée (Thème 13, Hackathon J.U.I.N 2026).
+Interface de **Syntra**, messagerie technique sécurisée (Thème 13, Hackathon J.U.I.N 2026).
 
 Backend cible : **NestJS + Socket.IO + MongoDB** (voir [`../Documentation/Cahier_des_charges.md`](../Documentation/Cahier_des_charges.md)).
 Le frontend fonctionne **sans backend** grâce aux mocks MSW + un bus temps réel multi-onglets.

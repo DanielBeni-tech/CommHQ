@@ -57,25 +57,30 @@ export function MessageItem({
   return (
     <div
       className={cn(
-        "group relative flex gap-3 rounded-md px-2 py-1.5 hover:bg-muted/50",
-        message.pinned && "bg-primary/5"
+        "group relative flex gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-muted/60",
+        message.pinned &&
+          "border-l-[3px] border-warning bg-warning-soft/40 pl-2 hover:bg-warning-soft/60"
       )}
     >
       <Avatar className="mt-0.5 h-9 w-9">
-        <AvatarFallback>{initials(message.author.name)}</AvatarFallback>
+        <AvatarFallback className="bg-primary/15 text-[12px] font-semibold text-primary">
+          {initials(message.author.name)}
+        </AvatarFallback>
       </Avatar>
 
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold">{message.author.name}</span>
-          <span className="text-xs text-muted-foreground">
+          <span className="text-[14px] font-semibold text-foreground">
+            {message.author.name}
+          </span>
+          <span className="font-mono text-[11px] text-muted-foreground">
             {formatMessageTime(message.createdAt)}
           </span>
           {message.editedAt && (
-            <span className="text-xs text-muted-foreground">(modifié)</span>
+            <span className="text-[11px] text-muted-foreground">(modifié)</span>
           )}
           {message.pinned && (
-            <span className="flex items-center gap-1 text-xs text-primary">
+            <span className="inline-flex items-center gap-1 rounded-full bg-warning/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-warning">
               <Pin className="h-3 w-3" /> épinglé
             </span>
           )}

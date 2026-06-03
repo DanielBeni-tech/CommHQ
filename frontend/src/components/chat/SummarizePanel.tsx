@@ -18,12 +18,16 @@ interface SummarizePanelProps {
  */
 export function SummarizePanel({ loading, summary, error, onRefresh }: SummarizePanelProps) {
   return (
-    <div className="z-10 shrink-0 border-b bg-accent/8 px-4 py-2.5 backdrop-blur-sm">
+    <div className="z-10 shrink-0 border-b border-accent/15 bg-accent-soft/80 px-4 py-2.5 dark:bg-accent-soft">
       <div className="flex items-center gap-3">
-        {/* Icône + label */}
-        <div className="flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-accent">
-          <Sparkles className="h-3.5 w-3.5" />
-          Résumé IA
+        {/* Pastille + label IA */}
+        <div className="flex shrink-0 items-center gap-1.5">
+          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-accent text-accent-foreground">
+            <Sparkles className="h-3.5 w-3.5" />
+          </span>
+          <span className="hidden text-[10px] font-bold uppercase tracking-[0.1em] text-accent sm:inline">
+            Résumé IA
+          </span>
         </div>
 
         {/* Contenu */}
@@ -39,21 +43,22 @@ export function SummarizePanel({ loading, summary, error, onRefresh }: Summarize
           )}
 
           {error && !loading && (
-            <span className="text-destructive text-xs">
+            <span className="text-xs text-destructive">
               Génération échouée — cliquez sur actualiser.
             </span>
           )}
 
           {!summary && !loading && !error && (
             <span className="text-xs text-muted-foreground">
-              Cliquez sur <strong>Actualiser</strong> pour obtenir un résumé des décisions clés de ce canal.
+              Cliquez sur <strong className="text-accent">Actualiser</strong> pour obtenir
+              un résumé des décisions clés de ce canal.
             </span>
           )}
 
           {summary && !loading && (
             <span className="leading-snug text-foreground">
               {summary.summary}
-              <span className="ml-2 text-xs text-muted-foreground">
+              <span className="ml-2 font-mono text-[11px] text-muted-foreground">
                 · {summary.messageCount} msg · {formatFullDate(summary.generatedAt)}
               </span>
             </span>
@@ -67,7 +72,7 @@ export function SummarizePanel({ loading, summary, error, onRefresh }: Summarize
           onClick={onRefresh}
           disabled={loading}
           aria-label="Actualiser le résumé IA"
-          className="shrink-0 gap-1.5 text-xs text-accent hover:text-accent"
+          className="shrink-0 gap-1.5 text-xs text-accent hover:bg-accent/15 hover:text-accent"
         >
           <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
           Actualiser

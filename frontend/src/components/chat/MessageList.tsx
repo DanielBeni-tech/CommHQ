@@ -102,12 +102,14 @@ export function MessageList({
       >
         <div className="flex flex-col gap-0.5 p-4">
           {/* En-tête du canal */}
-          <div className="mb-4 border-b pb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <div className="mb-5 border-b pb-5">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft text-primary">
               <Hash className="h-6 w-6" />
             </div>
-            <h2 className="mt-2 text-xl font-bold">Bienvenue dans #{channel.name}</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight">
+              Bienvenue dans <span className="text-primary">#{channel.name}</span>
+            </h2>
+            <p className="mt-1 max-w-xl text-sm text-muted-foreground">
               {channel.description ?? "Début de la conversation."}
             </p>
           </div>
@@ -153,8 +155,7 @@ export function MessageList({
         <Button
           onClick={scrollToBottom}
           size="sm"
-          variant="secondary"
-          className="absolute bottom-4 right-5 z-20 gap-1.5 rounded-full shadow-lg"
+          className="absolute bottom-4 right-5 z-20 gap-1.5 rounded-full"
           aria-label="Aller en bas"
         >
           <ArrowDown className="h-3.5 w-3.5" />
