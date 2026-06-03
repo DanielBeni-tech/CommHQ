@@ -1,4 +1,4 @@
-import { Sparkles, X } from "lucide-react";
+import { Loader2, RefreshCw, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -9,44 +9,69 @@ interface SummarizePanelProps {
   loading: boolean;
   summary: ChannelSummary | null;
   error: boolean;
-  onClose: () => void;
+  onRefresh: () => void;
 }
 
-export function SummarizePanel({ loading, summary, error, onClose }: SummarizePanelProps) {
+/**
+ * Barre fixe permanente sous le header du canal.
+ * Affiche toujours le dernier résumé IA (ou un état d'invitation à en générer un).
+ */
+export function SummarizePanel({ loading, summary, error, onRefresh }: SummarizePanelProps) {
   return (
-    <div className="border-b bg-accent/5 px-4 py-3">
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-2 text-sm font-semibold text-accent">
-          <Sparkles className="h-4 w-4" />
-          Résumé IA — 3 phrases clés
+    <div className="z-10 shrink-0 border-b bg-accent/8 px-4 py-2.5 backdrop-blur-sm">
+      <div className="flex items-center gap-3">
+        {/* Icône + label */}
+        <div className="flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-accent">
+          <Sparkles className="h-3.5 w-3.5" />
+          Résumé IA
         </div>
-        <Button variant="ghost" size="icon" className="h-6 w-6" onClick={onClose} aria-label="Fermer le résumé">
-          <X className="h-3.5 w-3.5" />
-        </Button>
-      </div>
 
-      <div className="mt-2 text-sm">
-        {loading && (
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-11/12" />
-            <Skeleton className="h-4 w-3/4" />
-          </div>
-        )}
-        {error && !loading && (
-          <p className="text-destructive">
-            Le résumé n'a pas pu être généré. Réessayez dans un instant.
-          </p>
-        )}
-        {summary && !loading && (
-          <>
-            <p className="leading-relaxed">{summary.summary}</p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Généré par IA · {summary.messageCount} messages analysés ·{" "}
-              {formatFullDate(summary.generatedAt)}
-            </p>
-          </>
-        )}
+        {/* Contenu */}
+        <div className="min-w-0 flex-1 text-sm">
+          {loading && (
+            <div className="flex items-center gap-3">
+              <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin text-accent" />
+              <div className="flex flex-1 flex-col gap-1">
+                <Skeleton className="h-3 w-full max-w-lg" />
+                <Skeleton className="h-3 w-4/5 max-w-md" />
+              </div>
+            </div>
+          )}
+
+          {error && !loading && (
+            <span className="text-destructive text-xs">
+              Génération échouée — cliquez sur actualiser.
+            </span>
+          )}
+
+          {!summary && !loading && !error && (
+            <span className="text-xs text-muted-foreground">
+              Cliquez sur <strong>Actualiser</strong> pour obtenir un résumé des décisions clés de ce canal.
+            </span>
+          )}
+
+          {summary && !loading && (
+            <span className="leading-snug text-foreground">
+              {summary.summary}
+              <span className="ml-2 text-xs text-muted-foreground">
+                · {summary.messageCount} msg · {formatFullDate(summary.generatedAt)}
+              </span>
+            </span>
+          )}
+        </div>
+
+        {/* Bouton refresh */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onRefresh}
+          disabled={loading}
+          aria-label="Actualiser le résumé IA"
+          className="shrink-0 gap-1.5 text-xs text-accent hover:text-accent"
+        >
+          <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
+          Actualiser
+        </Button>
       </div>
     </div>
   );

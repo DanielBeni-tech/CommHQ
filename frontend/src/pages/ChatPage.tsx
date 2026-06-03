@@ -40,7 +40,6 @@ export function ChatPage() {
   const summarize = useSummarize();
   const { typingUsers, notifyTyping } = useChannelRealtime(channelId);
 
-  const [summaryOpen, setSummaryOpen] = useState(false);
   const [summary, setSummary] = useState<ChannelSummary | null>(null);
   const [summaryError, setSummaryError] = useState(false);
   const [pinnedOpen, setPinnedOpen] = useState(false);
@@ -52,7 +51,6 @@ export function ChatPage() {
 
   async function handleSummarize() {
     if (!channelId) return;
-    setSummaryOpen(true);
     setSummary(null);
     setSummaryError(false);
     try {
@@ -90,14 +88,12 @@ export function ChatPage() {
         onShowPinned={() => setPinnedOpen(true)}
       />
 
-      {summaryOpen && (
-        <SummarizePanel
-          loading={summarize.isPending}
-          summary={summary}
-          error={summaryError}
-          onClose={() => setSummaryOpen(false)}
-        />
-      )}
+      <SummarizePanel
+        loading={summarize.isPending}
+        summary={summary}
+        error={summaryError}
+        onRefresh={handleSummarize}
+      />
 
       <MessageList
         channel={channel}
