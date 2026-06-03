@@ -1,0 +1,28 @@
+# Stack locale de développement : MongoDB + Backend NestJS
+# Lancer avec : docker compose up -d
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: commhq-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: .
+    container_name: commhq-backend
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/commhq
+    ports:
+      - "3000:3000"
+
+volumes:
+  mongo_data:
