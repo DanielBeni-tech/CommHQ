@@ -70,8 +70,8 @@ export class MessagesController {
     @CurrentUser() current: AuthenticatedUser,
     @Param('messageId') messageId: string,
   ) {
-    await this.messagesService.remove(messageId, current.userId);
-    this.messagesGateway.broadcastDeletedMessage(messageId);
+    const { channelId } = await this.messagesService.remove(messageId, current.userId);
+    this.messagesGateway.broadcastDeletedMessage(channelId, messageId);
   }
 
   /**

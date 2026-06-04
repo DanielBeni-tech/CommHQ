@@ -41,8 +41,14 @@ export function RegisterPage() {
       });
       setAuth(token, user);
       navigate("/", { replace: true });
-    } catch {
-      toast.error("Échec de l'inscription. Réessayez.");
+    } catch (err) {
+      // Affiche le détail renvoyé par le backend (ex. mot de passe trop faible,
+      // email déjà utilisé, …) pour faciliter la correction par l'utilisateur.
+      const detail =
+        (err as { response?: { data?: { message?: string | string[] } } })
+          ?.response?.data?.message;
+      const msg = Array.isArray(detail) ? detail.join(" ") : detail;
+      toast.error(msg ?? "Échec de l'inscription. Réessayez.");
     } finally {
       setLoading(false);
     }
@@ -104,10 +110,15 @@ export function RegisterPage() {
               type="password"
               autoComplete="new-password"
               required
-              minLength={6}
+              minLength={8}
+              pattern="^(?=.*[A-Za-z])(?=.*\d).+$"
+              title="Au moins 8 caractères, avec une lettre et un chiffre."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <p className="text-xs text-muted-foreground">
+              8 caractères minimum, avec au moins une lettre et un chiffre.
+            </p>
           </div>
           <Button type="submit" size="lg" className="w-full" disabled={loading}>
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}

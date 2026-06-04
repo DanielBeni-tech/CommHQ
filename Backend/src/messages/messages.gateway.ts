@@ -35,8 +35,8 @@ import { JwtPayload } from '../auth/strategies/jwt.strategy';
  * Événements serveur → clients :
  *   - 'message:new'      <PublicMessage>
  *   - 'message:updated'  <PublicMessage>
- *   - 'message:deleted'  { messageId }
- *   - 'typing'           { channelId, userId }
+ *   - 'message:deleted'  { channelId, messageId }
+ *   - 'typing'           { channelId, userId, userName, isTyping }
  *   - 'summary:new'      <Summary>   (publié par AiSummaryService)
  */
 @WebSocketGateway({
@@ -78,6 +78,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
       // On attache les infos d'identité au socket pour les réutiliser sur chaque event.
       (client.data as Record<string, unknown>).userId = payload.sub;
       (client.data as Record<string, unknown>).email = payload.email;
+      (client.data as Record<string, unknown>).userName = payload.name;
 
       this.logger.log(`Socket connecté : ${client.id} (user=${payload.sub})`);
     } catch (error) {
@@ -140,16 +141,21 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
 
   /**
    * Indicateur "est en train d'écrire" — non persisté.
+   * On rediffuse `userName` (issu du JWT) pour que les autres clients puissent
+   * afficher "Camille est en train d'écrire…" sans requête additionnelle.
    */
   @SubscribeMessage('typing')
   onTyping(
     @ConnectedSocket() client: Socket,
-    @MessageBody() body: { channelId: string },
+    @MessageBody() body: { channelId: string; isTyping?: boolean },
   ): void {
     const userId = this.requireUserId(client);
+    const userName = (client.data as { userName?: string }).userName ?? 'Utilisateur';
     client.to(this.channelRoom(body.channelId)).emit('typing', {
       channelId: body.channelId,
       userId,
+      userName,
+      isTyping: body.isTyping !== false,
     });
   }
 
@@ -169,10 +175,14 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
     this.server.to(this.channelRoom(message.channelId)).emit('message:updated', message);
   }
 
-  broadcastDeletedMessage(messageId: string): void {
-    // Sans canal connu (suppression), on émet à toutes les rooms du namespace.
-    // En pratique, le client filtre par messageId localement.
-    this.server.emit('message:deleted', { messageId });
+  /**
+   * Diffuse une suppression de message uniquement aux sockets du canal concerné.
+   */
+  broadcastDeletedMessage(channelId: string, messageId: string): void {
+    this.server.to(this.channelRoom(channelId)).emit('message:deleted', {
+      channelId,
+      messageId,
+    });
   }
 
   /**

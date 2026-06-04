@@ -22,7 +22,7 @@ export class Invitation {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
   createdByUserId!: Types.ObjectId;
 
-  @Prop({ default: null, lowercase: true, trim: true })
+  @Prop({ type: String, default: null, lowercase: true, trim: true })
   email!: string | null;
 
   @Prop({ required: true })

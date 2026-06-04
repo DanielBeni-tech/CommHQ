@@ -24,8 +24,12 @@ export function LoginPage() {
       const { token, user } = await login(email, password);
       setAuth(token, user);
       navigate("/", { replace: true });
-    } catch {
-      toast.error("Échec de la connexion. Vérifiez vos identifiants.");
+    } catch (err) {
+      const detail =
+        (err as { response?: { data?: { message?: string | string[] } } })
+          ?.response?.data?.message;
+      const msg = Array.isArray(detail) ? detail.join(" ") : detail;
+      toast.error(msg ?? "Échec de la connexion. Vérifiez vos identifiants.");
     } finally {
       setLoading(false);
     }

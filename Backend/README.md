@@ -21,7 +21,7 @@ bot IA de résumé). Implémente le cahier des charges du dossier
 ### 1. Prérequis
 
 - Node.js ≥ 20
-- MongoDB en local (ou via le `docker-compose.yml` fourni)
+- (optionnel) MongoDB local ou Docker — le mode `start:demo` n'en a pas besoin.
 
 ### 2. Installation
 
@@ -29,16 +29,19 @@ bot IA de résumé). Implémente le cahier des charges du dossier
 cd Backend
 npm install
 cp .env.example .env
-# Éditer .env : renseigner JWT_SECRET et JWT_REFRESH_SECRET (chaînes aléatoires longues)
+# Éditer .env si nécessaire (JWT_SECRET, MONGODB_URI…)
 ```
 
 ### 3. Lancer en local
 
 ```bash
-# Avec Docker (recommandé : démarre MongoDB + backend)
+# Mode démo : MongoDB en mémoire (zéro install), idéal pour hackathon
+npm run start:demo
+
+# Avec Docker (persistance, démarre MongoDB + backend conteneurisé)
 docker compose up -d
 
-# Ou en mode développeur (MongoDB doit déjà tourner sur localhost:27017)
+# Avec un MongoDB local déjà installé sur localhost:27017
 npm run start:dev
 ```
 
@@ -142,6 +145,8 @@ Backend/src/
 | `POST` | `/api/workspaces/:workspaceId/channels` | Créer (modérateur) |
 | `GET` | `/api/workspaces/:workspaceId/channels` | Liste |
 | `GET` | `/api/channels/:id` | Détail |
+| `PATCH` | `/api/channels/:id` | Renommer / mettre à jour (modérateur) |
+| `DELETE` | `/api/channels/:id` | Supprimer + purger les messages (modérateur, sauf `general`) |
 
 ### Messages
 
@@ -206,8 +211,8 @@ const socket = io('http://localhost:3000/realtime', {
 |---|---|---|
 | `message:new` | `PublicMessage` | Nouveau message dans le canal |
 | `message:updated` | `PublicMessage` | Édition ou (dés)épinglage |
-| `message:deleted` | `{ messageId }` | Suppression |
-| `typing` | `{ channelId, userId }` | Quelqu'un tape |
+| `message:deleted` | `{ channelId, messageId }` | Suppression (diffusé uniquement à la room du canal) |
+| `typing` | `{ channelId, userId, userName, isTyping }` | Quelqu'un tape (`userName` = nom d'affichage) |
 | `summary:new` | `{ id, channelId, sentences[3], ... }` | Le bot IA a posté un résumé |
 
 ---
@@ -244,11 +249,32 @@ Tous les contenus utilisateurs passent par `sanitizeMarkdownContent` ou
 
 ## Vérification et tests des flux critiques
 
+### Tests automatisés (e2e)
+
+```bash
+npm run test:e2e
+```
+
+Lance Jest contre une instance NestJS réelle adossée à un MongoDB en mémoire
+(`mongodb-memory-server`). Aucune dépendance externe n'est nécessaire.
+
+Suites couvertes (40 tests) :
+
+- **`test/app.e2e-spec.ts`** — REST : santé, auth (register/login + erreurs),
+  workspaces, canaux, règles de modération, messages (envoi, sanitisation XSS,
+  édition, épinglage, suppression), invitations (preview public, consommation,
+  expiration), messages directs, bot IA (résumé en 3 phrases via provider mock).
+- **`test/realtime.e2e-spec.ts`** — Socket.IO : rejet des connexions sans
+  JWT / avec JWT invalide, diffusion `message:new`, voie rapide `message:send`,
+  diffusion `summary:new` après génération d'un résumé IA.
+
+### Flux critiques (résumé)
+
 | Flux | Étapes simulées |
 |---|---|
 | **Onboarding** | 1) Modérateur crée une invitation → URL générée. 2) Nouvel utilisateur appelle `POST /auth/register` avec `invitationToken`. 3) L'utilisateur est ajouté comme membre. 4) Le canal `#general` (créé à la naissance du workspace) est accessible. |
-| **Envoi de message** | 1) Connexion WS avec JWT. 2) `channel:join`. 3) `message:send` → réponse < 300ms ; tous les autres clients reçoivent `message:new`. |
-| **Épinglage** | 1) Modérateur appelle `POST /messages/:id/pin` → message marqué `pinned:true`. 2) Tous les clients reçoivent `message:updated`. |
+| **Envoi de message** | 1) Connexion WS avec JWT. 2) `channel:join`. 3) `message:send` → réponse < 300 ms ; tous les autres clients reçoivent `message:new`. |
+| **Épinglage** | 1) Modérateur appelle `POST /messages/:id/pin` → message marqué `pinned: true`. 2) Tous les clients reçoivent `message:updated`. |
 | **Résumé IA** | 1) `POST /channels/:id/summary`. 2) Provider `mock` ou `openai` renvoie 3 phrases. 3) Sauvegarde + diffusion WebSocket `summary:new`. |
 | **DM** | 1) `POST /direct-messages` → message stocké. 2) `GET /direct-messages` liste les conversations triées par récence. |
 

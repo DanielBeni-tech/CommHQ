@@ -8,10 +8,15 @@ import { AuthenticatedUser } from '../../common/decorators/current-user.decorato
 /**
  * Payload signé dans nos JWT.
  * Le client envoie ce token via le header `Authorization: Bearer <token>`.
+ *
+ * `name` est inclus pour que la passerelle WebSocket puisse propager le nom
+ * d'affichage dans les évènements `typing` sans avoir à recharger l'utilisateur
+ * en base à chaque message.
  */
 export interface JwtPayload {
   sub: string; // userId
   email: string;
+  name: string;
   role: 'user' | 'admin';
 }
 

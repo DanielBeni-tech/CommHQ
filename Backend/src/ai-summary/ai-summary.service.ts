@@ -81,6 +81,9 @@ export class AiSummaryService {
       id: summary._id.toString(),
       channelId,
       sentences,
+      // Version "phrase unique" pratique pour le frontend (panneau de résumé compact).
+      // On garde aussi `sentences` pour les clients qui veulent contrôler la mise en forme.
+      summary: sentences.join(' '),
       messageCount: messages.length,
       modelUsed,
       createdAt: (summary as unknown as { createdAt: Date }).createdAt,

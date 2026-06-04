@@ -1,6 +1,17 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ChannelsService } from './channels.service';
 import { CreateChannelDto } from './dto/create-channel.dto';
+import { UpdateChannelDto } from './dto/update-channel.dto';
 import { CurrentUser, AuthenticatedUser } from '../common/decorators/current-user.decorator';
 
 @Controller()
@@ -43,6 +54,32 @@ export class ChannelsController {
       description: channel.description,
       isPrivate: channel.isPrivate,
       type: channel.type,
+      createdAt: (channel as unknown as { createdAt: Date }).createdAt,
     };
+  }
+
+  /**
+   * Renomme ou met à jour un canal (modérateur uniquement).
+   */
+  @Patch('channels/:id')
+  update(
+    @CurrentUser() current: AuthenticatedUser,
+    @Param('id') channelId: string,
+    @Body() dto: UpdateChannelDto,
+  ) {
+    return this.channelsService.update(channelId, current.userId, dto);
+  }
+
+  /**
+   * Supprime un canal et tous ses messages (modérateur uniquement).
+   * Le canal `general` est protégé.
+   */
+  @Delete('channels/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(
+    @CurrentUser() current: AuthenticatedUser,
+    @Param('id') channelId: string,
+  ): Promise<void> {
+    await this.channelsService.remove(channelId, current.userId);
   }
 }

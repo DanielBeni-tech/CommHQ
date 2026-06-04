@@ -9,6 +9,8 @@ export interface AppConfig {
   port: number;
   corsOrigin: string;
   mongodbUri: string;
+  /** Si "true", crée un compte de démo au démarrage (cf. DemoSeedService). */
+  seedDemo: string;
   jwt: {
     secret: string;
     expiresIn: string;
@@ -44,6 +46,7 @@ export default (): AppConfig => ({
   port: parseInt(process.env.PORT ?? '3000', 10),
   corsOrigin: process.env.CORS_ORIGIN ?? 'http://localhost:5173',
   mongodbUri: requireEnv('MONGODB_URI', 'mongodb://localhost:27017/commhq'),
+  seedDemo: process.env.SEED_DEMO ?? 'false',
   jwt: {
     secret: requireEnv('JWT_SECRET'),
     expiresIn: process.env.JWT_EXPIRES_IN ?? '1d',

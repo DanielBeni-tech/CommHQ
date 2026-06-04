@@ -6,6 +6,7 @@ import { MessagesController } from './messages.controller';
 import { MessagesGateway } from './messages.gateway';
 import { ChannelsModule } from '../channels/channels.module';
 import { WorkspacesModule } from '../workspaces/workspaces.module';
+import { UsersModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
 
 @Module({
@@ -13,6 +14,7 @@ import { AuthModule } from '../auth/auth.module';
     MongooseModule.forFeature([{ name: Message.name, schema: MessageSchema }]),
     ChannelsModule,
     WorkspacesModule,
+    UsersModule,
     AuthModule, // pour JwtService dans la gateway
   ],
   providers: [MessagesService, MessagesGateway],

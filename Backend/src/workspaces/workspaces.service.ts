@@ -61,7 +61,9 @@ export class WorkspacesService {
       description: 'Canal de bienvenue — discutez librement ici.',
     });
 
-    return this.toPublic(workspace);
+    // Le créateur est par construction modérateur — on le renvoie pour
+    // que le frontend puisse activer immédiatement les contrôles d'admin.
+    return { ...this.toPublic(workspace), myRole: 'moderator' as WorkspaceRole };
   }
 
   async findById(workspaceId: string): Promise<WorkspaceDocument> {

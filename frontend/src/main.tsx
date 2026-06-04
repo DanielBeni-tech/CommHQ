@@ -16,7 +16,21 @@ const queryClient = new QueryClient({
 });
 
 async function enableMocking() {
-  if (import.meta.env.VITE_USE_MOCKS !== "true") return;
+  if (import.meta.env.VITE_USE_MOCKS !== "true") {
+    // En cas de bascule mock → vrai backend, l'ancien Service Worker MSW
+    // peut rester enregistré dans le navigateur et continuer à intercepter
+    // les requêtes. On le désinscrit explicitement pour éviter ce piège.
+    if ("serviceWorker" in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (const r of registrations) {
+        const url = r.active?.scriptURL ?? "";
+        if (url.includes("mockServiceWorker")) {
+          await r.unregister();
+        }
+      }
+    }
+    return;
+  }
   const { worker } = await import("./mocks/browser");
   return worker.start({ onUnhandledRequest: "bypass" });
 }

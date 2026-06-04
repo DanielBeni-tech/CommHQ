@@ -14,6 +14,7 @@ import { MessagesModule } from './messages/messages.module';
 import { DirectMessagesModule } from './direct-messages/direct-messages.module';
 import { InvitationsModule } from './invitations/invitations.module';
 import { AiSummaryModule } from './ai-summary/ai-summary.module';
+import { DemoSeedModule } from './common/seeds/demo-seed.module';
 import { HealthController } from './health.controller';
 
 /**
@@ -49,6 +50,7 @@ import { HealthController } from './health.controller';
     DirectMessagesModule,
     InvitationsModule,
     AiSummaryModule,
+    DemoSeedModule,
   ],
   controllers: [HealthController],
   providers: [

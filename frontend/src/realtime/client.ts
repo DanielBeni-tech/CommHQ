@@ -1,6 +1,7 @@
 import { io, type Socket } from "socket.io-client";
 
-import type { RealtimeEvent, User } from "@/types";
+import { __internal } from "@/api/services";
+import type { Message, RealtimeEvent, User } from "@/types";
 
 type Handler = (event: RealtimeEvent) => void;
 
@@ -57,27 +58,67 @@ class MockRealtimeClient implements RealtimeClient {
   }
 }
 
-/** Implémentation Socket.IO pour le backend NestJS réel. */
+/**
+ * Implémentation Socket.IO pour le backend NestJS réel.
+ *
+ * Particularités d'alignement :
+ *  - Le backend expose la passerelle dans le namespace `/realtime`.
+ *  - Les évènements messages sont nommés `message:new` / `message:updated` /
+ *    `message:deleted` côté serveur. On les retraduit ici dans le format
+ *    domaine du frontend (`message:new`, `message:update`, `message:delete`).
+ *  - Le payload `typing` du serveur fournit `{ channelId, userId, userName, isTyping }`
+ *    sans objet User complet : on reconstitue un objet `User` minimal.
+ */
 class SocketRealtimeClient implements RealtimeClient {
   private socket: Socket | null = null;
   private handlers = new Set<Handler>();
 
   connect(token: string | null) {
     if (this.socket) return;
-    this.socket = io(WS_URL, {
+    this.socket = io(`${WS_URL.replace(/\/$/, "")}/realtime`, {
       auth: token ? { token } : undefined,
       transports: ["websocket"],
       autoConnect: true,
     });
-    const forward = (type: RealtimeEvent["type"]) =>
-      this.socket?.on(type, (payload: unknown) =>
-        this.handlers.forEach((h) => h({ type, payload } as RealtimeEvent))
-      );
-    forward("message:new");
-    forward("message:update");
-    forward("message:delete");
-    forward("typing");
-    forward("presence:update");
+
+    this.socket.on("message:new", (raw: unknown) => {
+      const message = __internal.mapMessage(raw as Parameters<typeof __internal.mapMessage>[0]);
+      this.dispatch({ type: "message:new", payload: message });
+    });
+
+    this.socket.on("message:updated", (raw: unknown) => {
+      const message = __internal.mapMessage(raw as Parameters<typeof __internal.mapMessage>[0]);
+      this.dispatch({ type: "message:update", payload: message });
+    });
+
+    this.socket.on("message:deleted", (payload: { channelId: string; messageId: string }) => {
+      this.dispatch({ type: "message:delete", payload });
+    });
+
+    this.socket.on(
+      "typing",
+      (payload: {
+        channelId: string;
+        userId: string;
+        userName?: string;
+        isTyping?: boolean;
+      }) => {
+        const user: User = {
+          id: payload.userId,
+          name: payload.userName ?? "Utilisateur",
+          email: "",
+          globalRole: "user",
+        };
+        this.dispatch({
+          type: "typing",
+          payload: {
+            channelId: payload.channelId,
+            user,
+            isTyping: payload.isTyping !== false,
+          },
+        });
+      },
+    );
   }
 
   disconnect() {
@@ -95,7 +136,9 @@ class SocketRealtimeClient implements RealtimeClient {
   }
 
   publish() {
-    /* Avec un vrai backend, le serveur diffuse les évènements. */
+    // Sur le vrai backend, c'est le serveur qui diffuse les évènements ;
+    // les mutations React Query mettent déjà à jour l'UI de l'émetteur
+    // de manière optimiste. Inutile de redispatcher localement.
   }
 
   setTyping(channelId: string, isTyping: boolean) {
@@ -106,8 +149,19 @@ class SocketRealtimeClient implements RealtimeClient {
     this.handlers.add(handler);
     return () => this.handlers.delete(handler);
   }
+
+  private dispatch(event: RealtimeEvent) {
+    this.handlers.forEach((h) => h(event));
+  }
+
+  /** Lit l'état brut envoyé par le backend (utilisé pour les types narrows). */
+  // (placeholder pour future extension — non utilisé pour l'instant)
 }
 
 export const realtime: RealtimeClient = USE_MOCKS
   ? new MockRealtimeClient()
   : new SocketRealtimeClient();
+
+// Données utilitaires non typées : utilisé par mapMessage pour parser
+// les payloads reçus en WebSocket. Identique à la fonction de services.ts.
+export type { Message };

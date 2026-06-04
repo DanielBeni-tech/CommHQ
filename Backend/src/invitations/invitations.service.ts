@@ -78,11 +78,18 @@ export class InvitationsService {
 
   /**
    * Aperçu public d'une invitation (avant inscription). Ne révèle pas le créateur.
+   * Inclut le nom du workspace pour que le frontend puisse afficher
+   * "Vous êtes invité à rejoindre {workspaceName}" sans appel additionnel.
    */
   async previewByToken(token: string) {
     const invitation = await this.findValidByToken(token);
+    const workspace = await this.workspacesService
+      .findById(invitation.workspaceId.toString())
+      .catch(() => null);
     return {
+      token: invitation.token,
       workspaceId: invitation.workspaceId.toString(),
+      workspaceName: workspace?.name ?? 'un espace de travail',
       email: invitation.email,
       expiresAt: invitation.expiresAt,
     };
